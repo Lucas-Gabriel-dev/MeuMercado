@@ -1,37 +1,40 @@
 import { connect } from "../database/db";
+import { compare } from "bcryptjs";
+import { sign } from "jsonwebtoken";
 
 interface IAuthenticateUserRequest{
-    name: string;
     email: string;
     password: string;
 }
 
 class AuthenticateUserService{
-    async execute({name, email, password}: IAuthenticateUserRequest){
+    async execute({ email, password }: IAuthenticateUserRequest){
         const Connect = await connect()
-        const values = [name, email, password]
 
-        const [ user ] = await Connect.query(`SELECT email FROM clientes WHERE email = '${values[1]}'`);
-
-        if(!email){
-            throw new Error("Email incorrect"); 
-        }
+        const [ user ]  = await Connect.query(`SELECT * FROM clientes WHERE email = '${email}'`);
 
         if(user[0] === undefined){
-            console.log(user[0])
-            throw new Error("Email or password incorrect")
+            throw new Error("Email or password incorrect"); 
         }
 
-        const [ passwordUser ] = await Connect.query(
-            `SELECT password FROM clientes WHERE email = '${values[1]}' 
-            AND password = '${values[2]}' `
-        )
+        const passwordMatch = await compare(password, user[0].password)
 
-        if(passwordUser[0] === undefined){
+        if(!passwordMatch){
             throw new Error("Email or password incorrect")
         } 
 
-        return (values);
+        const token = sign(
+            {
+                email: user[0].email
+            },
+            "d52ad414321b29c436c538ecf1766225",
+            {
+                subject: user[0].id,
+                expiresIn: "1d"
+            }
+        )
+
+        return (token);
 
     }
 }
