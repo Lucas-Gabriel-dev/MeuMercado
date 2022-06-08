@@ -11,6 +11,8 @@ class SearchProductsController{
             name
         })
 
+        
+
         return response.json(products)
     }
 }
