@@ -9,15 +9,19 @@ class SearchProductsService{
         const Connect = await connect()
 
         const [ products ] = await Connect.query(
-            `SELECT * FROM product WHERE name LIKE '%${name.split(" ")[0]}%' || type LIKE '%${name}%'`
+            `SELECT id_product, product_name, type, image, MIN(price) as price
+            FROM product, product_has_partner
+            WHERE 
+            product_has_partner.product_id_product = id_product AND
+            product_name LIKE '%${name.split(" ")[0]}%' AND
+            estoque > 0
+            GROUP BY product_has_partner.product_id_product`
         )
 
         if(products[0] === undefined){
             throw new Error("Product not found") 
         }
-
-        console.log(name.split(" "))
-
+        
         
         return (products)
     }

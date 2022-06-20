@@ -7,11 +7,21 @@ interface IUserRequest{
     email: string;
     admin?: boolean;
     password: string;
+    telephone: string;
+    birthdate: Date;
+    city: string;
+    address: string;
+    district: string;
+    number: string;
+    complement: string;
+    cep: string;
 }
 
 class CreateUser {
     id: string;
-    async execute({ name, email, admin = false, password }: IUserRequest){
+    async execute({ 
+        name, email, admin = false, password, telephone, birthdate, city, address, district, number, complement, cep
+    }: IUserRequest){
         const Connect = await connect();
         
         if(!email){
@@ -35,10 +45,18 @@ class CreateUser {
             name, 
             email, 
             password = passwordHash, 
-            admin
+            admin,
+            telephone,
+            birthdate,
+            city,
+            address,
+            district,
+            number,
+            complement,
+            cep
         ];
         
-        const sql = `INSERT INTO clientes(id, name, email, password, admin) VALUES ('${this.id}',?,?,?,?);`;
+        const sql = `INSERT INTO clientes(id, name, email, password, admin, telephone, birthdate, city, address, district, number, complement, cep) VALUES ('${this.id}',?,?,?,?,?,?,?,?,?,?,?,?);`;
         
         await Connect.query(sql, user);
         

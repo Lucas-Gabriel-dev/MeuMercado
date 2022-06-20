@@ -11,31 +11,50 @@ class AuthenticateUserService{
     async execute({ email, password }: IAuthenticateUserRequest){
         const Connect = await connect()
 
-        const [ user ]  = await Connect.query(`SELECT * FROM clientes WHERE email = '${email}'`);
+        const [ user ]  = await Connect.query(`SELECT id, id_partner, email, email_partner, 
+        password, password_partner
+        FROM clientes, partner 
+        WHERE email = '${email}' OR email_partner = '${email}'`);
 
         if(user[0] === undefined){
             throw new Error("Email or password incorrect"); 
         }
 
-        const passwordMatch = await compare(password, user[0].password)
+        const passwordMatchClient = await compare(password, user[0].password)
+       
+        if(passwordMatchClient){
+            const token = sign(
+                {
+                    email: user[0].email
+                },
+                "d52ad414321b29c436c538ecf1766225",
+                {
+                    subject: user[0].id,
+                    expiresIn: "1d"
+                }
+            )
 
-        if(!passwordMatch){
-            throw new Error("Email or password incorrect")
+            return (token);
         } 
 
-        const token = sign(
-            {
-                email: user[0].email
-            },
-            "d52ad414321b29c436c538ecf1766225",
-            {
-                subject: user[0].id,
-                expiresIn: "1d"
-            }
-        )
+        const passwordMatchPartner = await compare(password, user[0].password_partner)
 
-        return (token);
+        if(passwordMatchPartner){
+            const token = sign(
+                {
+                    email: user[0].email_partner
+                },
+                "d52ad414321b29c436c538ecf1766225",
+                {
+                    subject: user[0].id_partner,
+                    expiresIn: "1d"
+                }
+            )
 
+            return (token);
+        } 
+    
+        throw new Error("Email or password incorrect")
     }
 }
 
