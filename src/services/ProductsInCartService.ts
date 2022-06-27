@@ -9,7 +9,8 @@ class ProductsInCartService{
         }
 
         const [ products ] = await Connect.query(
-            `SELECT id_product, product_name, image, description, market_name, price, quantity_product  
+            `SELECT id_product, product_name, image, description, market_name, 
+            price, quantity_product, estoque, product_has_market_id
             FROM partner, product, product_has_partner, shopping_cart
             WHERE shopping_cart.cliente_id = '${user_id}' AND
             id_product =  shopping_cart.product_id_product AND

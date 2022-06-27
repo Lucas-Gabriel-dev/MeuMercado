@@ -10,6 +10,8 @@ class RegisterPartnerUserController{
             market_estado, market_address, market_number, market_complement
         } = request.body;
 
+        
+
         const registerPartnerAndMarketService = new RegisterPartnerAndMarketService();
 
         const user = await registerPartnerAndMarketService.execute({ 

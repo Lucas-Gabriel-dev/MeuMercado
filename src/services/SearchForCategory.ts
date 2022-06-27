@@ -1,11 +1,11 @@
 import { connect } from "../database/db";
 
-interface ISearchProductsRequest{
-    name: string;
+interface ISearchForCategoryRequest{
+    product_type: string;
 }
 
-class SearchProductsService{
-    async execute({ name }: ISearchProductsRequest){
+class SearchForCategoryService{
+    async execute({ product_type }: ISearchForCategoryRequest){
         const Connect = await connect()
 
         const [ products ] = await Connect.query(
@@ -13,7 +13,7 @@ class SearchProductsService{
             FROM product, partner, product_has_partner
             WHERE 
             product_has_partner.product_id_product = id_product AND
-            product_name LIKE '%${name.split(" ")[0]}%' AND
+            product.type = '${product_type}' AND
             estoque > 0
             GROUP BY product_has_partner.product_id_product`
         )
@@ -27,4 +27,4 @@ class SearchProductsService{
     }
 }
 
-export { SearchProductsService }
+export { SearchForCategoryService }

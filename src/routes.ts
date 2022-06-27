@@ -16,6 +16,8 @@ import { ShoppingCartController } from "./controllers/ShoppingCartController";
 import { ProductsInCartController } from "./controllers/ProductsInCartController";
 import { CustomerOrderController } from "./controllers/CustomerOrderController";
 import { OrdersMadeCustomerController } from "./controllers/OrdersMadeCustomerController";
+import { SearchForCategoryController } from "./controllers/SearchForCategoryController";
+import { ListAllProductsController } from "./controllers/ListAllProductsController";
 
 const router = Router();
 
@@ -23,6 +25,7 @@ const createUserController = new CreateUserController();
 const authenticateUserController = new AuthenticateUserController();
 const accountUserController = new AccountUserController();
 const searchProductsController = new SearchProductsController();
+const searchForCategoryController = new SearchForCategoryController();
 const recoveryPasswordController = new RecoveryPasswordController();
 const resetPassowordController = new ResetPassowordController();
 const detailsProcutsController = new DetailsProductController();
@@ -38,9 +41,13 @@ const productsInCartController = new ProductsInCartController();
 const customerOrderController = new CustomerOrderController();
 const ordersMadeCustomerController = new OrdersMadeCustomerController();
 
+const listAllProductsController = new ListAllProductsController();
+
 /** Site Surveys */
 router.post("/results", searchProductsController.handle)
+router.post("/results/category", searchForCategoryController.handle)
 router.post("/detailsproducts", detailsProcutsController.handle)
+router.get("/searchproducts", searchForAllProductsController.handle)
 
 /** User Routes */
 router.post("/login", authenticateUserController.handle)
@@ -59,13 +66,11 @@ router.post("/forgot_password", recoveryPasswordController.handle)
 router.post("/reset_password", resetPassowordController.handle)
 
 /** Add Itens partner */
-router.get("/searchproducts", ensureAuthenticated, searchForAllProductsController.handle)
 router.get("/productsmarket", ensureAuthenticated, productsOfMarketController.handle)
 router.post("/addproducts", ensureAuthenticated, addProductsAtMarketController.handle)
+router.get("/listproducts", ensureAuthenticated, listAllProductsController.handle)
 
 router.get("/logged", ensureAuthenticated, accountUserController.handle)
-
-
-
+  
 
 export { router };

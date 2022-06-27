@@ -1,6 +1,8 @@
 import { connect } from "../database/db";
 import { hash } from "bcryptjs";
 import { v4 as uuid } from "uuid";
+import { sign } from "jsonwebtoken";
+
 
 interface IPartnerMarketRequest{
     name: string;
@@ -65,13 +67,31 @@ class RegisterPartnerAndMarketService{
             market_complement
         ];
         
-        const sql = `INSERT INTO partner(id_partner, name_partner, email_partner, password, telephone_partner, cpf_partner, rg_partner, 
+        const sql = `INSERT INTO partner(id_partner, name_partner, email_partner, password_partner, telephone_partner, cpf_partner, rg_partner, 
             orgao_emissor, cnpj, market_name, market_telephone, market_cep, 
             market_city, market_estado, market_address, market_number, market_complement) VALUES ('${this.id}',?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`;
         
         await Connect.query(sql, user);
+
+        const [ newUser ]  = await Connect.query(`SELECT id_partner, email_partner, 
+        password_partner
+        FROM partner 
+        WHERE email_partner = '${email}'`);
+
+        const token = sign(
+            {
+                email: newUser[0].email_partner
+            },
+            "d52ad414321b29c436c538ecf1766225",
+            {
+                subject: newUser[0].id_partner,
+                expiresIn: "1d"
+            }
+        )
+
         
-        return  user
+
+        return (token);
     }
 }
 

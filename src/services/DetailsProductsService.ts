@@ -19,7 +19,8 @@ class DetailsProductService{
         // )
 
         const [ products ] = await Connect.query(
-            `SELECT id_product, product_name, type, image, partner_id_partner, market_name, market_cep, price, description
+            `SELECT id_product, product_name, type, image, partner_id_partner, market_name, 
+            market_cep, price, description
             FROM product, product_has_partner, partner
             WHERE product.id_product = ${productId} AND
             product_has_partner.product_id_product = ${productId} AND
@@ -27,6 +28,8 @@ class DetailsProductService{
             estoque > 0
             ORDER BY price ASC`
         )
+
+        
 
         if(products[0] === undefined){
             throw new Error("Product not found") 

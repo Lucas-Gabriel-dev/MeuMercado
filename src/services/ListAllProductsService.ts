@@ -1,14 +1,13 @@
 import { connect } from "../database/db";
 
-class SearchForAllProductsService{
+class ListAllProductsService{
     async execute(){
         const Connect = await connect()
 
         const [ products ] = await Connect.query(
-            `SELECT id_product, product_name, image, price,
-            description FROM product, product_has_partner
-            WHERE product_has_partner.product_id_product = id_product
-            ORDER BY price ASC`
+            `SELECT id_product, product_name, image,
+            description, type, weight FROM product
+            ORDER BY product_name ASC`
         )
 
         if(products[0] === undefined){
@@ -19,4 +18,4 @@ class SearchForAllProductsService{
     }
 }
 
-export { SearchForAllProductsService }
+export { ListAllProductsService }

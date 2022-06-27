@@ -4,7 +4,7 @@ import { CustomerOrderService } from "../services/CustomerOrdersService";
 class CustomerOrderController{
     async handle(request: Request, response: Response){
         const { user_id } = request
-        const { partner_id, id_product, quantity, price } = request.body;
+        const { partner_id, id_product, quantity, value_total } = request.body;
 
         const customerOrderService = new CustomerOrderService();
 
@@ -13,7 +13,7 @@ class CustomerOrderController{
             partner_id,
             id_product,
             quantity,
-            price
+            value_total
         });
 
         return response.json(purchasedProducts);
