@@ -2,6 +2,8 @@
 
 ![](/logo2.png)
 
+<img src="/logo2.png" width="200px" heigth="200px">
+
 ![](https://badgen.net/badge/version/1.0.0/green) ![](https://badgen.net/npm/license/lodash) ![](https://badgen.net/badge/TypeScript/4.7.3/blue)
 
 ## Projeto desenvolvido para Trabalho de Conclusão de Curso
