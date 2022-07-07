@@ -29,3 +29,7 @@ A linguagem de programação TypeScript foi utilizada para realizar toda a progr
 O software Insomnia foi utilizado para o testes de todas as rotas. É aconselhável que, caso sinta a necessidade de testar as rotas, utilizar esse mesmo sofware. 
                
 ---
+
+<h4 align="center">
+✅  MeuMercado  🚀 Concluído!!!  ✅
+</h4>
