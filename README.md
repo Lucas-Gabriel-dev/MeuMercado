@@ -3,13 +3,13 @@
 ![](/logo2.png)
 
 ![](https://badgen.net/badge/version/1.0.0/green) ![](https://badgen.net/npm/license/lodash) ![](https://badgen.net/badge/TypeScript/4.7.3/blue)
+
 ##Projeto desenvolvido para Trabalho de Conclusão de Curso
 
 ###Sobre
 ---
 O site Meu Mercado foi criado com o intuito de juntar todos os mercados de 	uma região em apenas um lugar. Gerando facilidade na hora de realizar pesquisas para encontar o melhor preço.
-               
-----
+
 
 ##Ferramentas utilizadas (BackEnd)
 
