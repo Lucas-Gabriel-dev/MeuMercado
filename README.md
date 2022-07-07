@@ -9,7 +9,8 @@
 ### Sobre
 ---
 O site Meu Mercado foi criado com o intuito de juntar todos os mercados de 	uma região em apenas um lugar. Gerando facilidade na hora de realizar pesquisas para encontar o melhor preço.
-
+               
+---
 
 ## Ferramentas utilizadas (BackEnd)
 
